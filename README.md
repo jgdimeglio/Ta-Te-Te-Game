@@ -1,2 +1,2 @@
-Ta-Te-Te-Game
+Ta-Te-Ti
 =============
