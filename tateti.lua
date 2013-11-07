@@ -28,7 +28,7 @@ end
 
 -- Mostrar imagen
 -- drawImg(550, 0, 'resources/logo.jpg')
-function drawImg(x, y, src)
+function drawImg(y, x, src)
 	local logo = canvas:new(src)
 	canvas:compose(x, y, logo)
 	canvas:flush()
@@ -54,10 +54,10 @@ function newRow(zero, one, two)
 	} 
 end
 
-function newPoint(x, y)
+function newPoint(y, x)
 	return {
-		['x'] = x,
-		['y'] = y		
+		['y'] = y,
+		['x'] = x		
 	}
 end
 
@@ -72,14 +72,14 @@ oldFocus = focus
 
 tileSize = 100
 
-function drawTile(x, y)
-	drawImg(x * tileSize, y * tileSize, 'resources/'..board[x][y]..'.jpg')
+function drawTile(y, x)
+	drawImg(y * tileSize, x * tileSize, 'resources/'..board[y][x]..'.jpg')
 end
 
 function drawBoard()
 	for y = 0, #board do
 		for x = 0, #(board[y]) do
-			drawTile(x, y)
+			drawTile(y, x)
 		end
 	end	
 end
@@ -88,9 +88,9 @@ function replaceTile(localFocus, corrimiento)
 	x = localFocus['x']
 	y = localFocus['y']
 	
-	board[x][y] = board[x][y] + corrimiento
+	board[y][x] = board[y][x] + corrimiento
 	
-	drawTile(x, y)
+	drawTile(y, x)
 end
 
 function drawFocus()
@@ -99,7 +99,7 @@ function drawFocus()
 end
 
 function canMark()
-	return board[focus['x']][focus['y']] == 20
+	return board[focus['y']][focus['x']] == 20
 end
 
 function mark(nroPlayer)
@@ -107,7 +107,66 @@ function mark(nroPlayer)
 end
 
 function win(nroPlayer)
-	return true
+        return assertHorizontal(nroPlayer+10) or assertVertical(nroPlayer+10)
+or assertDiagonal(nroPlayer+10)
+end
+
+-------------------------------------------------
+--- WINNERS CHECK
+-------------------------------------------------
+
+--Chequea todas las posibles jugadas horizontales
+function assertHorizontal(player)
+    for y = 0, #board do
+        asserts=true
+        for x = 0, #board[0] do
+	    --Es igual al player o al player seleccionado
+            asserts= asserts and ( board[y][x] == player or
+board[y][x] == player+10)
+        end
+	--Si completo una fila ya gano
+        if asserts then
+            return true
+        end
+    end
+    return false
+end
+
+
+function assertVertical(player)
+    for x = 0, #board[0] do
+        asserts=true
+                for y = 0, #board do
+			--Es igual al player o al player seleccionado
+                        asserts= asserts and ( board[y][x] == player or
+board[y][x] == player+10)
+                end
+	--Si completo una columna ya gano
+        if asserts then
+            return true
+        end
+    end
+    return false
+end
+
+function assertDiagonal(player)
+    --Posibles diagonales
+    posibles = {
+        [0] = newRow(0,1,2),
+        [1] = newRow(2,1,0)
+    }
+    for y = 0, #posibles do
+        asserts=true
+                for x = 0, #board do
+                        asserts= asserts and ( board[x][posibles[y][x]] ==
+player or board[x][posibles[y][x]] == player+10)
+                end
+	--Si completo una diagonal
+        if asserts then
+            return true
+        end
+    end
+    return false
 end
 
 -------------------------------------------------
@@ -134,12 +193,12 @@ function isInfoKey(evt)
 end
 
 function moveFocus(eje, corrimiento)
-	oldFocus = newPoint(focus['x'], focus['y'])
+	oldFocus = newPoint(focus['y'], focus['x'])
 	
 	focus[eje] = (focus[eje] + corrimiento) % 3
 	
-	print(oldFocus['x'], oldFocus['y'])
-	print(focus['x'], focus['y'])
+	--print(oldFocus['y'], oldFocus['x'])
+	print(focus['y'], focus['x'])
 	
 	drawFocus()
 end
@@ -199,9 +258,6 @@ event.register(handler)
 -- showInfo()
 
 drawBoard()
-
-
-
 
 
 
