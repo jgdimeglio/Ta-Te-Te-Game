@@ -109,20 +109,45 @@ function win(nroPlayer)
 or assertDiagonal(nroPlayer+10)
 end
 
-function emptyTiles() 
-
+function empate()
+	return size(emptyTiles()) == 0
 end
 
-function playIA()
+-------------------------------------------------
+---     ArtificialI
+-------------------------------------------------
+
+function size(array)
+	return table.getn(array)
+end
+
+function emptyTiles()
+	result = {}
+	
 	for y = 0, #board do
         for x = 0, #board[0] do
         	if(canMarkIn(y, x)) then
-        		markIn(y, x, 2)
-        		print(y, x)
-        		return
+        	    print(size(result))
+        		result[size(result) + 1] = newPoint(y, x)
         	end
         end
     end
+    	
+	return result
+end
+
+function playIA()
+
+    options = emptyTiles()
+    
+    print(size(options))
+    
+    math.randomseed( os.time() )
+	i = math.random(1, size(options))
+	
+	tile = options[i]
+	markIn(tile['y'], tile['x'], 2)  
+	
 end
 
 -------------------------------------------------
@@ -254,6 +279,10 @@ function onKeyEnter()
 		if(win(1)) then
 			print("GANASTE")
 			disableArrows()
+		elseif empate() then
+			print("EMPATE")
+			disableArrows()
+			return
 		else
 			print("JUEGA IA")
 			playIA()
@@ -262,6 +291,7 @@ function onKeyEnter()
 				disableArrows()
 			end
 		end
+		
 	else
 		print("OCUPADO")
 	end
