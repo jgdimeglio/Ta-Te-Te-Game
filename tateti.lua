@@ -127,7 +127,6 @@ function emptyTiles()
 	for y = 0, #board do
         for x = 0, #board[0] do
         	if(canMarkIn(y, x)) then
-        	    print(size(result))
         		result[size(result) + 1] = newPoint(y, x)
         	end
         end
@@ -164,6 +163,20 @@ function enableArrows()
 	arrowsEnabled = true
 end
 
+function restartGame()
+	board = {
+		[0] = newRow(20,10,10),
+		[1] = newRow(10,10,10),
+		[2] = newRow(10,10,10),
+	}
+
+	focus = newPoint(0,0)
+	oldFocus = focus
+	
+	enableArrows()
+	
+	drawBoard()
+end
 
 -------------------------------------------------
 --- WINNERS CHECK
@@ -313,7 +326,7 @@ keyMapDisabled = {
 	['CURSOR_DOWN'] = dummy,
 	['CURSOR_LEFT'] = dummy,
 	['CURSOR_RIGHT'] = dummy,
-	['ENTER'] = dummy
+	['ENTER'] = restartGame
 }
 
 function handler(evt)
