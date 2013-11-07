@@ -46,7 +46,7 @@ tileSize = 100
 
 --Dibuja un tile en la posicion y , x
 function drawTile(y, x)
-	drawImg(y * tileSize, x * tileSize, 'resources/'..board[y][x]..'.jpg')
+	drawImg(y * tileSize + 10, x * tileSize + 10, 'resources/'..board[y][x]..'.jpg')
 end
 
 --Dibuja el tablero
