@@ -1,14 +1,4 @@
 
-
-
-
-resultsQuiniela = {
-	[0] = '1 - 2608',
-	[1] = '2 - 5833',
-	[2] = '3 - 8269'
-}
-
-
 showing = false
 
 -- Aviso que hay info en la pantalla principal
@@ -102,14 +92,53 @@ function canMark()
 	return board[focus['y']][focus['x']] == 20
 end
 
+function canMarkIn(x, y)
+	return board[x][y] == 20 or board[x][y] == 10
+end
+
 function mark(nroPlayer)
 	replaceTile(focus, nroPlayer)
+end
+
+function markIn(y, x, nroPlayer)
+	replaceTile(newPoint(y, x), nroPlayer)
 end
 
 function win(nroPlayer)
         return assertHorizontal(nroPlayer+10) or assertVertical(nroPlayer+10)
 or assertDiagonal(nroPlayer+10)
 end
+
+function emptyTiles() 
+
+end
+
+function playIA()
+	for y = 0, #board do
+        for x = 0, #board[0] do
+        	if(canMarkIn(y, x)) then
+        		markIn(y, x, 2)
+        		print(y, x)
+        		return
+        	end
+        end
+    end
+end
+
+-------------------------------------------------
+--- HANDLE SCREENs
+-------------------------------------------------
+
+arrowsEnabled = true
+
+function disableArrows()
+	arrowsEnabled = false
+end
+
+function enableArrows()
+	arrowsEnabled = true
+end
+
 
 -------------------------------------------------
 --- WINNERS CHECK
@@ -136,11 +165,11 @@ end
 function assertVertical(player)
     for x = 0, #board[0] do
         asserts=true
-                for y = 0, #board do
+		for y = 0, #board do
 			--Es igual al player o al player seleccionado
-                        asserts= asserts and ( board[y][x] == player or
-board[y][x] == player+10)
-                end
+			asserts= asserts and ( board[y][x] == player or
+				board[y][x] == player+10)
+		end
 	--Si completo una columna ya gano
         if asserts then
             return true
@@ -157,10 +186,10 @@ function assertDiagonal(player)
     }
     for y = 0, #posibles do
         asserts=true
-                for x = 0, #board do
-                        asserts= asserts and ( board[x][posibles[y][x]] ==
-player or board[x][posibles[y][x]] == player+10)
-                end
+        for x = 0, #board do
+			asserts= asserts and ( board[x][posibles[y][x]] ==
+			player or board[x][posibles[y][x]] == player+10)
+		end
 	--Si completo una diagonal
         if asserts then
             return true
@@ -197,9 +226,6 @@ function moveFocus(eje, corrimiento)
 	
 	focus[eje] = (focus[eje] + corrimiento) % 3
 	
-	--print(oldFocus['y'], oldFocus['x'])
-	print(focus['y'], focus['x'])
-	
 	drawFocus()
 end
 
@@ -227,16 +253,21 @@ function onKeyEnter()
 		--Ver si gano
 		if(win(1)) then
 			print("GANASTE")
+			disableArrows()
 		else
 			print("JUEGA IA")
-			--playIA()
+			playIA()
+			if(win(2)) then
+				print("PERDISTE!")
+				disableArrows()
+			end
 		end
 	else
 		print("OCUPADO")
 	end
 end
 
-keyMap = {
+keyMapEnabled = {
 	['CURSOR_UP'] = onKeyUp,
 	['CURSOR_DOWN'] = onKeyDown,
 	['CURSOR_LEFT'] = onKeyLeft,
@@ -244,11 +275,26 @@ keyMap = {
 	['ENTER'] = onKeyEnter
 }
 
+function dummy()
+end
+
+keyMapDisabled = {
+	['CURSOR_UP'] = dummy,
+	['CURSOR_DOWN'] = dummy,
+	['CURSOR_LEFT'] = dummy,
+	['CURSOR_RIGHT'] = dummy,
+	['ENTER'] = dummy
+}
+
 function handler(evt)
 
 	if isPressKey(evt) then
 		-- Ver si la funcion esta en el map
-		keyMap[evt.key]()	
+		if arrowsEnabled then
+			keyMapEnabled[evt.key]()
+		else
+			keyMapDisabled[evt.key]()
+		end
 	end
 end
 
@@ -258,7 +304,6 @@ event.register(handler)
 -- showInfo()
 
 drawBoard()
-
 
 
 
