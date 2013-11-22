@@ -4,42 +4,86 @@
 	<head>
 		
 		<regionBase>
-			<region id="fondo" width="100%" height="100%">
-				<region id="lua" width="100%" height="100%" zIndex="2"/>
+			<region  id="fondo" width="100%" height="100%" >
+				<region  id="lua" width="100%" height="100%" zIndex="2"/>
+				<region id="rmenu" left="60%" top="75%"  width="30%" height="15%" zIndex="2" />
 			</region>
 		</regionBase>
 		
 		<descriptorBase>
 			<descriptor id="video" region="fondo" />
 			<descriptor id="game" region="lua" />
+			<descriptor id="dmenu" region="rmenu" />
 		</descriptorBase>
 		
 		<connectorBase>
-			<causalConnector id="onEndStart">
-				<simpleCondition role="onEnd" />
-				<simpleAction role="start" />
+			<causalConnector id="onKeySelectionStart">
+				<simpleCondition key="INFO" role="onSelection"/>
+				<connectorParam name="var"/>
+		
+				<compoundAction operator="par">
+					<simpleAction role="set" value="$var"/>
+					<simpleAction role="start"/>
+				</compoundAction>
+
 			</causalConnector>
+	
+			<causalConnector id="onKeySelectionStop">
+				<simpleCondition key="INFO" role="onSelection"/>
+				<connectorParam name="var"/>
+				
+				<compoundAction operator="par">
+					<simpleAction role="set" value="$var"/>
+					<simpleAction role="stop"/>
+				</compoundAction>	
+			</causalConnector>
+			
 		</connectorBase>
 	</head>
 
 	<body>
-		<!-- <media id="video_src" src="speaker.mp4" descriptor="video"> -->
-		<!--	<property name="soundLevel" value="100%"/> -->
-		<!-- </media> -->
+		 <media  id="video_src"   src="resources/video.mpeg" descriptor="video"> 
+		 	<property name="bounds" />
+		
+		 </media> 
 		
 		<media id="game_media" src="tateti.lua" descriptor="game">
 		</media>
 		
-
+		<media id="menu" src="resources/menu.jpg" descriptor="dmenu">
+		</media>
+		
+		
+		
+		<!--game ON-->
+		<link xconnector="onKeySelectionStart">
+			<bind component="menu" role="onSelection">
 			
-		<!-- <link id="link1" xconnector="onEndStart"> -->
-		<!--	<bind role="onEnd" component="video_src" /> -->
-		<!--	<bind role="start" component="video_src" /> -->
-		<!-- </link> -->
+			</bind>
+			<bind role="start" component="game_media">
+				
+			</bind>
+			
+			<bind component="video_src" role="set" interface="bounds">
+				<bindParam name="var" value="44.8%, 0%, 54.8%, 55.2%" />
+			</bind>
+			
+		</link>
+
+		<!--game OFF-->
+		<link xconnector="onKeySelectionStop">
+			<bind component="game_media" role="onSelection">
+				
+			</bind>
+			<bind component="game_media" role="stop"/>
+			<bind component="video_src" role="set" interface="bounds">
+				<bindParam name="var" value="0%, 0%, 100%, 100%" />
+			</bind>
+		</link>
 		
-		
-		<port id="entrada2" component="game_media"/>
-		<!-- <port id="entrada" component="video_src"/> -->
+
+		<port id="pmenu" component="menu"/>
+		<port id="entrada" component="video_src"/> 
 		
 	</body>
 </ncl>
