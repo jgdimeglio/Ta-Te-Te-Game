@@ -21,6 +21,18 @@ function newPoint(y, x)
 	}
 end
 
+
+--Informacion 
+-- 11 = player 
+-- 12 = Artificial I 
+
+-- 21 = player focus
+-- 22 = Artificial I focus
+
+-- 10 = empty 
+-- 20 = empty focus
+
+--Tablero del ta te ti
 board = {
 	[0] = newRow(20,10,10),
 	[1] = newRow(10,10,10),
