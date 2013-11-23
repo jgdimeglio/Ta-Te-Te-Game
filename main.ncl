@@ -6,7 +6,8 @@
 		<regionBase>
 			<region  id="fondo" width="100%" height="100%" >
 				<region  id="lua" width="100%" height="100%" zIndex="2"/>
-				<region id="rmenu" left="60%" top="75%"  width="30%" height="15%" zIndex="2" />
+				<region id="rmenu" left="60%" top="70%"  width="30%" height="15%" zIndex="2" />
+				<region  id="rimgFondo" width="100%" height="100%" zIndex="0"/>
 			</region>
 		</regionBase>
 		
@@ -14,6 +15,7 @@
 			<descriptor id="video" region="fondo" />
 			<descriptor id="game" region="lua" />
 			<descriptor id="dmenu" region="rmenu" />
+			<descriptor id="dimgFondo" region="rimgFondo" />
 		</descriptorBase>
 		
 		<connectorBase>
@@ -52,6 +54,9 @@
 		
 		<media id="menu" src="resources/menu.jpg" descriptor="dmenu">
 		</media>
+
+		<media id="imgFondo" src="resources/imgFondo.jpg" descriptor="dimgFondo">
+		</media>
 		
 		
 		
@@ -83,6 +88,7 @@
 		
 
 		<port id="pmenu" component="menu"/>
+		<port id="pimgFondo" component="imgFondo"/>
 		<port id="entrada" component="video_src"/> 
 		
 	</body>
