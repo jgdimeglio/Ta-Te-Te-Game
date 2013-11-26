@@ -19,6 +19,21 @@ function showInfo()
 	canvas:flush()
 end
 
+function showResult(result)
+		
+	canvas:attrColor('black')
+	canvas:drawRect('fill', 80, 440, 150, 30 * 2)
+	
+	canvas:attrColor('white')
+	canvas:attrFont('Tiresias', 15, 'bold')
+	
+	canvas:drawText(90, 445, result)
+	
+	canvas:drawText(90, 475, 'ENTER to restart')
+	
+	canvas:flush()
+end
+
 
 -- Mostrar imagen
 function drawImg(y, x, src)

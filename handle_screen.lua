@@ -13,6 +13,8 @@ function enableArrows()
 end
 
 function restartGame()
+	canvas_clean()
+
 	board = {
 		[0] = newRow(20,10,10),
 		[1] = newRow(10,10,10),

@@ -15,4 +15,6 @@ require 'handle_screen'
 require 'events'
 
 
-drawBoard()
+-- drawBoard()
+-- canvas_clean()
+restartGame()

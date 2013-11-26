@@ -54,9 +54,11 @@ function onKeyEnter()
 		--Ver si gano
 		if(win(1)) then
 			print("GANASTE")
+			showResult("GANASTE")
 			disableArrows()
 		elseif empate() then
 			print("EMPATE")
+			showResult("EMPATE")
 			disableArrows()
 			return
 		else
@@ -64,6 +66,7 @@ function onKeyEnter()
 			playIA()
 			if(win(2)) then
 				print("PERDISTE!")
+				showResult("PERDISTE!")
 				disableArrows()
 			end
 		end
