@@ -26,13 +26,10 @@ function playIA()
 
     options = emptyTiles()
     
-    print(size(options))
-    
     math.randomseed( os.time() )
 	i = math.random(1, size(options))
 	
 	tile = options[i]
 	markIn(tile['y'], tile['x'], 2)  
-	
 end
 
