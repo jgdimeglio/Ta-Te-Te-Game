@@ -27,4 +27,6 @@ function restartGame()
 	enableArrows()
 	
 	drawBoard()
+	
+	showActions()
 end
