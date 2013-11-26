@@ -13,3 +13,6 @@ require 'artificialI'
 require 'handle_screen'
 
 require 'events'
+
+
+drawBoard()

@@ -112,8 +112,5 @@ function handler(evt)
 	end
 end
 
-
-
 event.register(handler)
-drawBoard()
 
