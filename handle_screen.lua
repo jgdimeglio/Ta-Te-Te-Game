@@ -16,9 +16,9 @@ function restartGame()
 	canvas_clean()
 
 	board = {
-		[0] = newRow(20,10,10),
-		[1] = newRow(10,10,10),
-		[2] = newRow(10,10,10),
+		[0] = newRow(EMPTY_FOCUS,EMPTY,EMPTY),
+		[1] = newRow(EMPTY,EMPTY,EMPTY),
+		[2] = newRow(EMPTY,EMPTY,EMPTY)
 	}
 
 	focus = newPoint(0,0)

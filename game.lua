@@ -22,22 +22,25 @@ function newPoint(y, x)
 end
 
 
---Informacion 
--- 11 = player 
--- 12 = Artificial I 
+--Informacion
+EMPTY = 10 
+EMPTY_FOCUS = 20
+ 
+PLAYER1 = 11 
+PLAYER2 = 12 
 
--- 21 = player focus
--- 22 = Artificial I focus
+PLAYER1_FOCUS = 21
+PLAYER2_FOCUS = 22
 
--- 10 = empty 
--- 20 = empty focus
+EMPTY_BOARD = {
+	[0] = newRow(EMPTY_FOCUS,EMPTY,EMPTY),
+	[1] = newRow(EMPTY,EMPTY,EMPTY),
+	[2] = newRow(EMPTY,EMPTY,EMPTY)
+}
+
 
 --Tablero del ta te ti
-board = {
-	[0] = newRow(20,10,10),
-	[1] = newRow(10,10,10),
-	[2] = newRow(10,10,10),
-}
+board = EMPTY_BOARD
 
 focus = newPoint(0,0)
 oldFocus = focus
@@ -68,18 +71,17 @@ function replaceTile(localFocus, corrimiento)
 end
 
 function drawFocus()
-	replaceTile(oldFocus, -10)
-	replaceTile(focus, 10)
+	replaceTile(oldFocus, -EMPTY)
+	replaceTile(focus, EMPTY)
 end
 
---Checuea si puede marcar,puede ser que la marca ya este ocupada
-
+--Chequea si puede marcar, puede ser que la marca ya este ocupada
 function canMark()
-	return board[focus['y']][focus['x']] == 20
+	return board[focus['y']][focus['x']] == EMPTY_FOCUS
 end
 
 function canMarkIn(x, y)
-	return board[x][y] == 20 or board[x][y] == 10
+	return board[x][y] == EMPTY_FOCUS or board[x][y] == EMPTY
 end
 
 function mark(nroPlayer)
