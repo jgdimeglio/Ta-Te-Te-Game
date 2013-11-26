@@ -2,9 +2,9 @@
 ---     GAME ta te ti
 -------------------------------------------------
 
-require 'draw'
-
 require 'game'
+
+require 'draw'
 
 require 'winnerCheck'
 

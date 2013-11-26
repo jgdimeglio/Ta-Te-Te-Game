@@ -3,8 +3,6 @@
 -------------------------------------------------
 
 --Funciones generales y variables para el juego
-
-
 function newRow(zero, one, two)
 	return {
 		[0] = zero,
@@ -38,42 +36,14 @@ EMPTY_BOARD = {
 	[2] = newRow(EMPTY,EMPTY,EMPTY)
 }
 
+TILE_SIZE = 100
+
 
 --Tablero del ta te ti
 board = EMPTY_BOARD
 
 focus = newPoint(0,0)
 oldFocus = focus
-
-tileSize = 100
-
---Dibuja un tile en la posicion y , x
-function drawTile(y, x)
-	drawImg(y * tileSize + 10, x * tileSize + 10, 'resources/'..board[y][x]..'.jpg')
-end
-
---Dibuja el tablero
-function drawBoard()
-	for y = 0, #board do
-		for x = 0, #(board[y]) do
-			drawTile(y, x)
-		end
-	end	
-end
-
-function replaceTile(localFocus, corrimiento)
-	x = localFocus['x']
-	y = localFocus['y']
-	
-	board[y][x] = board[y][x] + corrimiento
-	
-	drawTile(y, x)
-end
-
-function drawFocus()
-	replaceTile(oldFocus, -EMPTY)
-	replaceTile(focus, EMPTY)
-end
 
 --Chequea si puede marcar, puede ser que la marca ya este ocupada
 function canMark()

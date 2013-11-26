@@ -4,8 +4,7 @@
 
 --Cheque para verificar si el player gano
 function win(nroPlayer)
-        return assertHorizontal(nroPlayer+10) or assertVertical(nroPlayer+10)
-or assertDiagonal(nroPlayer+10)
+	return assertHorizontal(nroPlayer+10) or assertVertical(nroPlayer+10) or assertDiagonal(nroPlayer+10)
 end
 
 --Cheque para verificar si el player empato
@@ -17,10 +16,10 @@ end
 --Chequea todas las posibles jugadas horizontales
 function assertHorizontal(player)
     for y = 0, #board do
-        asserts=true
+        asserts = true
         for x = 0, #board[0] do
 	    --Es igual al player o al player seleccionado
-            asserts= assertsPlayer(y,x,player)
+            asserts = assertsPlayer(y,x,player)
         end
 	--Si completo una fila ya gano
         if asserts then
@@ -33,10 +32,10 @@ end
 
 function assertVertical(player)
     for x = 0, #board[0] do
-        asserts=true
+        asserts = true
 		for y = 0, #board do
 			--Es igual al player o al player seleccionado
-			asserts= assertsPlayer(y,x,player)
+			asserts = assertsPlayer(y,x,player)
 		end
 	--Si completo una columna ya gano
         if asserts then
@@ -68,7 +67,6 @@ end
 
 --Chequea si el player jugo en la posicion y , x
 function assertsPlayer(y,x,player)
-	return	 asserts and ( board[y][x] == player or
-board[y][x] == player+10)
+	return asserts and ( board[y][x] == player or board[y][x] == player+10)
 end
 

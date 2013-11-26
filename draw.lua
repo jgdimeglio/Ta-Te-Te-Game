@@ -58,9 +58,38 @@ function canvas_clean()
 end
 
 
+----------------------------------------------
+----            GAME FUNCTIONS            ----
+----------------------------------------------
 
+--Dibuja un tile en la posicion y , x
+function drawTile(y, x)
+	drawImg(y * TILE_SIZE + 10, x * TILE_SIZE + 10, 'resources/'..board[y][x]..'.jpg')
+end
 
+--Dibuja el tablero
+function drawBoard()
+	for y = 0, #board do
+		for x = 0, #(board[y]) do
+			drawTile(y, x)
+		end
+	end	
+end
 
+function replaceTile(localFocus, corrimiento)
+	x = localFocus['x']
+	y = localFocus['y']
+	
+	board[y][x] = board[y][x] + corrimiento
+	
+	drawTile(y, x)
+end
+
+-- Mueve el focus de oldFocus a focus
+function drawFocus()
+	replaceTile(oldFocus, -EMPTY)
+	replaceTile(focus, EMPTY)
+end
 
 
 
