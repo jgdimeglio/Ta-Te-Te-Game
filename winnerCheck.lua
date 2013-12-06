@@ -2,12 +2,12 @@
 --- WINNERS CHECK
 -------------------------------------------------
 
---Cheque para verificar si el player gano
+--Chequeo para verificar si el player gano
 function win(nroPlayer)
-	return assertHorizontal(nroPlayer+10) or assertVertical(nroPlayer+10) or assertDiagonal(nroPlayer+10)
+	return assertHorizontal(nroPlayer) or assertVertical(nroPlayer) or assertDiagonal(nroPlayer)
 end
 
---Cheque para verificar si el player empato
+--Chequeo para verificar si el player empato
 function empate()
 	return size(emptyTiles()) == 0
 end

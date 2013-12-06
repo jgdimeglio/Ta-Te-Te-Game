@@ -44,7 +44,7 @@ function onKeyEnter()
 		mark(1)
 		
 		--Ver si gano
-		if(win(1)) then
+		if(win(PLAYER1)) then
 			print("GANASTE")
 			showResult("¡GANASTE!")
 			disableArrows()
@@ -56,7 +56,7 @@ function onKeyEnter()
 		else
 			print("JUEGA IA")
 			playIA()
-			if(win(2)) then
+			if(win(PLAYER2)) then
 				print("PERDISTE!")
 				showResult("¡PERDISTE!")
 				disableArrows()
@@ -87,7 +87,7 @@ function handler(evt)
 	if isPressKey(evt)   then
 		-- Ver si la funcion esta en el map
 		if arrowsEnabled then
- 			--pcall capturra el error ,si no encuentra el evento
+ 			--pcall captura el error ,si no encuentra el evento
 			pcall(function ()
 				keyMapEnabled[evt.key]()
 			end)
